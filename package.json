@@ -1,0 +1,91 @@
+{
+  "name": "markvan",
+  "displayName": "Markvan",
+  "version": "0.0.1",
+  "publisher": "ivan@klut.ru",
+  "main": "./extension.js",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "markvan",
+        "aliases": ["Markvan"],
+        "extensions": [".text"],
+		"configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "markvan",
+        "scopeName": "source.markvan",
+        "path": "./syntaxes/markvan.tmLanguage.json"
+      }
+    ],
+    "configurationDefaults": {
+      "[markvan]": {
+        "editor.links": true,
+          "editor.letterSpacing": 0.5,
+          "editor.lineHeight": 24,
+          "editor.fontWeight": "400"
+      },
+      "editor.tokenColorCustomizations": {
+        "textMateRules": [
+          {
+            "scope": "mv.white.markvan",
+            "settings": { "foreground": "#D4D4D4" } 
+          },
+          {
+            "scope": ["mv.faded.markvan", "punctuation.definition.list.markvan"],
+            "settings": { "foreground": "#949a8f" } 
+          },
+          { "scope": "mv.bracket.l0", "settings": { "foreground": "#949a8f" } },
+          { "scope": "mv.bracket.l1", "settings": { "foreground": "#9cb984" } },
+          { "scope": "mv.bracket.l2", "settings": { "foreground": "#aede86" } },
+          { "scope": "mv.text.l0", "settings": { "foreground": "#9c9076" } }, 
+          { "scope": "mv.text.l1", "settings": { "foreground": "#bdad8a" } }, 
+          { "scope": "mv.text.l2", "settings": { "foreground": "#d6c092" } },
+          {
+          "scope": "mv.text.embedding", "settings": { "foreground": "#9e779e" } },
+
+          {
+            "scope": "mv.header.bold.markvan",
+            "settings": { 
+              "foreground": "#bbcaa4", 
+              "fontStyle": "bold" 
+            }
+          },
+          {
+            "scope": "mv.header.normal.markvan",
+            "settings": { 
+              "foreground": "#bbcaa4", 
+              "fontStyle": "" 
+            }
+          },
+          
+          {
+            "scope": ["markup.list.markvan"],
+            "settings": { "foreground": "#9cb984" }
+          },
+          {
+            "scope": ["comment.line.markvan", "comment.block.markvan"],
+            "settings": { "foreground": "#8c8c8c" }
+          },
+
+          {
+            "scope": ["keyword.control.markvan", "markup.underline.link.markvan"],
+            "settings": { "foreground": "#8da1b7" } 
+          },
+          {
+            "scope": "entity.name.markvan.footnote",
+            "settings": { 
+              "foreground": "#7b8c9e", 
+              "fontStyle": "" 
+            }
+          }
+        ]
+      }
+    }
+  }
+}

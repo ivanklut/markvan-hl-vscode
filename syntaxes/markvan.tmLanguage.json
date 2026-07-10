@@ -1,0 +1,435 @@
+{
+	"name": "Markvan",
+	"scopeName": "source.markvan",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#headers"
+		},
+		{
+			"include": "#tables"
+		},
+		{
+			"include": "#block-embedding"
+		},
+		{
+			"include": "#level0"
+		},
+		{
+			"include": "#lists"
+		},
+		{
+			"include": "#inline"
+		}
+	],
+	"repository": {
+		"headers": {
+			"patterns": [
+				{
+					"match": "^(===|---|\\.\\.\\.|,,,|:::|;;;)(?:\\s+(#[a-zA-Zа-яА-ЯёЁ0-9_\\-]+))?\\s+(.+)$",
+					"captures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"2": {
+							"name": "mv.faded.markvan"
+						},
+						"3": {
+							"name": "mv.header.normal.markvan"
+						}
+					}
+				},
+				{
+					"begin": "^(\\*\\*\\*|\\^\\^\\^|\"\"\"|===)(\\s+#[\\w\\d_-]+)?$",
+					"beginCaptures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"2": {
+							"name": "mv.faded.markvan"
+						}
+					},
+					"end": "^\\s*$",
+					"patterns": [
+						{
+							"match": ".+",
+							"name": "mv.header.bold.markvan"
+						}
+					]
+				},
+				{
+					"begin": "^(---|\\.\\.\\.|,,,,|:::|;;;|~~~)(\\s+#[\\w\\d_-]+)?$",
+					"beginCaptures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"2": {
+							"name": "mv.faded.markvan"
+						}
+					},
+					"end": "^\\s*$",
+					"patterns": [
+						{
+							"match": ".+",
+							"name": "mv.header.normal.markvan"
+						}
+					]
+				}
+			]
+		},
+    "block-embedding": {
+      "name": "meta.block.embedding.markvan",
+      "begin": "^\\s*(\\{(?:\\{|§|&))(.*)$",
+      "beginCaptures": {
+        "1": { "name": "mv.text.embedding" },
+        "2": { "patterns": [ { "include": "#block-meta-inline" } ] }
+      },
+      "end": "^\\s*((?:\\}|§|&)\\})(.*)$",
+      "endCaptures": {
+        "1": { "name": "mv.text.embedding" },
+        "2": { "name": "mv.white.markvan" }
+      },
+      "contentName": "mv.text.embedding", 
+      "patterns": [
+        { "include": "#inline" },
+        { "include": "#comments" }
+      ]
+    },
+
+
+ 
+    "level0": {
+    "name": "meta.block.l0.markvan",
+"begin": "^\\s*([\\[\\(][`&%\\|/\\(\\[\\._$])([\\w\\d_\\-!]+)?(.*)$",
+
+    "beginCaptures": { 
+        "1": { "name": "mv.bracket.l0" },
+        "2": { "name": "mv.faded.markvan" }, 
+        "3": { "patterns": [ { "include": "#block-meta-inline" } ] } 
+    },
+
+      "end": "^\\s*([`&%\\|/\\)\\)\\]\\._$][\\]\\)])(.*)$",
+
+    "endCaptures": { 
+        "1": { "name": "mv.bracket.l0" },
+        "2": { "name": "mv.white.markvan" } 
+    },
+    "contentName": "mv.text.l0",
+    "patterns": [
+        { "include": "#level1" },
+        { "include": "#inline" },
+        { "include": "#lists" },
+        { "include": "#comments" }
+    ]
+    },
+    "level1": {
+    "name": "meta.block.l1.markvan",
+"begin": "^\\s*([\\[\\(][`&%\\|/\\(\\[\\._$])([\\w\\d_\\-!]+)?(.*)$",
+    "beginCaptures": { 
+        "1": { "name": "mv.bracket.l1" },
+        "2": { "name": "mv.faded.markvan" } 
+    },
+      "end": "^\\s*([`&%\\|/\\)\\)\\]\\._$][\\]\\)])(.*)$",
+    "endCaptures": { 
+        "1": { "name": "mv.bracket.l1" },
+        "2": { "name": "mv.faded.markvan" } 
+    },
+    "contentName": "mv.text.l1",
+    "patterns": [
+        { "include": "#level2" },
+        { "include": "#inline" },
+        { "include": "#comments" }
+    ]
+    },
+    "level2": {
+    "name": "meta.block.l2.markvan",
+"begin": "^\\s*([\\[\\(][`&%\\|/\\(\\[\\._$])([\\w\\d_\\-!]+)?(.*)$",
+    "beginCaptures": { 
+        "1": { "name": "mv.bracket.l2" },
+        "2": { "name": "mv.faded.markvan" } 
+    },
+      "end": "^\\s*([`&%\\|/\\)\\)\\]\\._$][\\]\\)])(.*)$",
+    "endCaptures": { 
+        "1": { "name": "mv.bracket.l2" },
+        "2": { "name": "mv.faded.markvan" } 
+    },
+    "contentName": "mv.text.l2",
+    "patterns": [
+        { "include": "#inline" },
+        { "include": "#comments" }
+    ]
+    }
+
+
+    ,
+
+
+
+		"comments": {
+			"patterns": [
+				{
+					"match": "(//[/\\?!])(.*$)",
+					"captures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"2": {
+							"name": "comment.line.markvan"
+						}
+					}
+				},
+				{
+					"name": "meta.comment.block.markvan",
+					"begin": "^\\[/",
+					"beginCaptures": {
+						"0": {
+							"name": "mv.bracket.l0"
+						}
+					},
+					"end": "/\\]$",
+					"endCaptures": {
+						"0": {
+							"name": "mv.bracket.l0"
+						}
+					},
+					"patterns": [
+						{
+							"name": "comment.block.markvan",
+							"match": "^(?!.*/\\]$).+"
+						}
+					]
+				}
+			]
+		},
+		"inline": {
+			"patterns": [
+				{
+					"match": "(\\[)(\\*+)(\\])",
+					"captures": {
+						"1": {
+							"name": "mv.bracket.l0"
+						},
+						"2": {
+							"name": "entity.name.markvan.footnote"
+						},
+						"3": {
+							"name": "mv.bracket.l0"
+						}
+					}
+				},
+				{
+					"match": "(\\[)(\\*(?:[0-9]+|#))(\\])",
+					"captures": {
+						"1": {
+							"name": "mv.bracket.l0"
+						},
+						"2": {
+							"name": "entity.name.markvan.footnote"
+						},
+						"3": {
+							"name": "mv.bracket.l0"
+						}
+					}
+				},
+				{
+					"match": "^\\s*(\\|)(\\*+)(?=\\s)",
+					"captures": {
+						"1": {
+							"name": "mv.bracket.l0"
+						},
+						"2": {
+							"name": "entity.name.markvan.footnote"
+						},
+						"3": {
+							"name": "entity.name.markvan.footnote"
+						}
+					}
+				},
+				{
+					"match": "^\\s*(\\|)(\\*(?:[0-9]+|#))(?=\\s)",
+					"captures": {
+						"1": {
+							"name": "mv.bracket.l0"
+						},
+						"2": {
+							"name": "entity.name.markvan.footnote"
+						}
+					}
+				},
+				{},
+
+        {
+          "match": "([_\\.\\$]\\[)(.*?)(\\][_\\.\\$])([\\w\\d_\\-!=*]*)",
+          "captures": {
+            "1": { "name": "mv.faded.markvan" },
+            "2": { "name": "mv.white.markvan" },
+            "3": { "name": "mv.faded.markvan" },
+            "4": { "name": "mv.faded.markvan" }
+          }
+        },
+
+
+				{
+					"match": "(&\\s*\\[)(.*?)(\\]\\s*&)(\\S*)",
+					"captures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"2": {
+							"name": "mv.white.markvan"
+						},
+						"3": {
+							"name": "mv.faded.markvan"
+						},
+						"4": {
+							"name": "mv.faded.markvan"
+						}
+					}
+				},
+				{
+					"match": "(%\\s*\\[)(.*?)(\\]\\s*)(\\S*)",
+					"captures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"2": {
+							"name": "mv.white.markvan"
+						},
+						"3": {
+							"name": "mv.faded.markvan"
+						},
+						"4": {
+							"name": "mv.faded.markvan"
+						}
+					}
+				},
+				{
+					"match": "(_\\[)(.*?)(]_)(\\S*)",
+					"captures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"2": {
+							"name": "mv.white.markvan"
+						},
+						"3": {
+							"name": "mv.faded.markvan"
+						},
+						"4": {
+							"name": "mv.faded.markvan"
+						}
+					}
+				},
+
+
+        {
+          "match": "(^\\|>>?|^\\|->|(?<=\\s)\\|>>?|(?<=\\s)\\|->)\\s*([^|\\n]+?)\\s+(\\|)(.*)$",
+          "captures": {
+            "1": { "name": "mv.faded.markvan" },
+            "2": { "name": "markup.underline.link.markvan" },
+            "3": { "name": "mv.faded.markvan" },
+            "4": { "name": "mv.white.markvan" }
+          }
+        },
+
+        {
+          "match": "(^\\|>>?|^\\|->|(?<=\\s)\\|>>?|(?<=\\s)\\|->)\\s*([^|\\n]+)$",
+          "captures": {
+            "1": { "name": "mv.faded.markvan" },
+            "2": { "name": "markup.underline.link.markvan" }
+          }
+        },
+
+
+				{
+					"match": "(<\\[)(.*?)(\\]>)",
+					"captures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"3": {
+							"name": "mv.faded.markvan"
+						}
+					}
+				},
+				{
+					"match": "(~\\^|~_|~-|!\\+|!-|\\*-|-\\*)(.*?)((\\^~|_~|-~|\\+!|-!|-\\*|\\*-))",
+					"captures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"3": {
+							"name": "mv.faded.markvan"
+						}
+					}
+				},
+				{
+					"match": "(\\*\\*|~~|``|\\^\\^|__)(.*?)(\\1)",
+					"captures": {
+						"1": {
+							"name": "mv.faded.markvan"
+						},
+						"3": {
+							"name": "mv.faded.markvan"
+						}
+					}
+				}
+			]
+		},
+		"lists": {
+			"patterns": [
+				{
+					"name": "markup.list.markvan",
+					"match": "^\\s*-(?:[0-9]+\\.?|[IVXLCDMivxlcdm]+\\.?|[a-zA-Zа-яА-ЯёЁ][\\)]?|#)?\\s"
+				}
+			]
+		},
+		"tables": {
+			"patterns": [
+				{
+					"name": "meta.block.table.markvan",
+					"begin": "^\\[\\|",
+					"beginCaptures": {
+						"0": {
+							"name": "mv.bracket.l0"
+						}
+					},
+					"end": "\\|\\]$",
+					"endCaptures": {
+						"0": {
+							"name": "mv.bracket.l0"
+						}
+					},
+					"patterns": [
+						{
+							"name": "mv.faded.markvan",
+							"match": "^\\s*(-{3,}|={3,})\\s*$"
+						},
+						{
+							 "match": "^(\\s*)([\\|:\\.!])([=#<]?)",
+							"captures": {
+								"2": {
+									"name": "mv.bracket.l0"
+								},
+								"3": {
+									"name": "mv.faded.markvan"
+								}
+							}
+						},
+						{
+							"include": "#headers"
+						},
+						{
+							"include": "#inline"
+						},
+						{
+							"include": "#comments"
+						}
+					]
+				}
+			]
+		}
+	}
+}
